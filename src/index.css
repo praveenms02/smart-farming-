@@ -2,63 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 @layer base {
   :root {
-    /* Earthy green palette */
-    --background: 45 30% 97%;
-    --foreground: 150 30% 15%;
+    /* Rich warm earth palette */
+    --background: 40 25% 97%;
+    --foreground: 160 35% 12%;
 
-    --card: 45 25% 95%;
-    --card-foreground: 150 30% 15%;
+    --card: 40 30% 98%;
+    --card-foreground: 160 35% 12%;
 
-    --popover: 45 25% 95%;
-    --popover-foreground: 150 30% 15%;
+    --popover: 40 30% 98%;
+    --popover-foreground: 160 35% 12%;
 
-    /* Forest green primary */
-    --primary: 152 45% 28%;
-    --primary-foreground: 45 30% 97%;
+    /* Deep emerald primary */
+    --primary: 158 64% 32%;
+    --primary-foreground: 40 30% 98%;
 
-    /* Warm earth secondary */
-    --secondary: 35 35% 85%;
-    --secondary-foreground: 35 50% 25%;
+    /* Golden amber secondary */
+    --secondary: 38 92% 60%;
+    --secondary-foreground: 160 35% 12%;
 
-    --muted: 45 20% 90%;
-    --muted-foreground: 150 15% 40%;
+    --muted: 40 20% 92%;
+    --muted-foreground: 160 20% 40%;
 
-    /* Leaf green accent */
-    --accent: 142 50% 45%;
-    --accent-foreground: 45 30% 97%;
+    /* Vibrant leaf accent */
+    --accent: 142 70% 45%;
+    --accent-foreground: 40 30% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 45 20% 85%;
-    --input: 45 20% 88%;
-    --ring: 152 45% 28%;
+    --border: 40 25% 88%;
+    --input: 40 25% 92%;
+    --ring: 158 64% 32%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    /* Custom semantic tokens */
-    --soil-brown: 25 40% 30%;
-    --leaf-green: 142 50% 45%;
-    --sun-gold: 45 80% 55%;
-    --water-blue: 200 60% 50%;
-    --earth-cream: 45 30% 92%;
+    /* Rich semantic tokens */
+    --soil-brown: 25 55% 25%;
+    --leaf-green: 142 70% 40%;
+    --sun-gold: 38 92% 55%;
+    --sky-blue: 200 75% 55%;
+    --earth-cream: 40 35% 94%;
+    --forest-deep: 158 45% 20%;
     
     /* Gradients */
-    --gradient-earth: linear-gradient(135deg, hsl(152 45% 28%) 0%, hsl(142 50% 35%) 100%);
-    --gradient-soil: linear-gradient(180deg, hsl(45 30% 97%) 0%, hsl(45 25% 92%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(45 30% 98%) 0%, hsl(45 25% 94%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(158 64% 32%) 0%, hsl(142 70% 40%) 50%, hsl(38 92% 50%) 100%);
+    --gradient-golden: linear-gradient(135deg, hsl(38 92% 55%) 0%, hsl(25 80% 50%) 100%);
+    --gradient-forest: linear-gradient(180deg, hsl(158 64% 32%) 0%, hsl(158 45% 20%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(40 30% 99%) 0%, hsl(40 25% 95%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(40 30% 100% / 0.9) 0%, hsl(40 25% 98% / 0.85) 100%);
     
-    /* Shadows */
-    --shadow-soft: 0 4px 20px -4px hsl(150 30% 15% / 0.08);
-    --shadow-card: 0 8px 30px -8px hsl(150 30% 15% / 0.12);
-    --shadow-glow: 0 0 40px hsl(142 50% 45% / 0.15);
-    
-    /* Animations */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Enhanced shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(160 35% 12% / 0.08);
+    --shadow-card: 0 10px 40px -10px hsl(160 35% 12% / 0.15);
+    --shadow-glow: 0 0 60px hsl(142 70% 45% / 0.2);
+    --shadow-golden: 0 8px 30px hsl(38 92% 55% / 0.3);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -71,33 +72,33 @@
   }
 
   .dark {
-    --background: 150 20% 8%;
-    --foreground: 45 30% 95%;
+    --background: 160 25% 6%;
+    --foreground: 40 30% 95%;
 
-    --card: 150 18% 12%;
-    --card-foreground: 45 30% 95%;
+    --card: 160 22% 10%;
+    --card-foreground: 40 30% 95%;
 
-    --popover: 150 18% 12%;
-    --popover-foreground: 45 30% 95%;
+    --popover: 160 22% 10%;
+    --popover-foreground: 40 30% 95%;
 
-    --primary: 142 50% 50%;
-    --primary-foreground: 150 30% 10%;
+    --primary: 142 70% 50%;
+    --primary-foreground: 160 35% 8%;
 
-    --secondary: 150 15% 18%;
-    --secondary-foreground: 45 30% 90%;
+    --secondary: 38 80% 45%;
+    --secondary-foreground: 40 30% 95%;
 
-    --muted: 150 15% 15%;
-    --muted-foreground: 45 15% 60%;
+    --muted: 160 18% 15%;
+    --muted-foreground: 40 20% 60%;
 
-    --accent: 142 50% 45%;
-    --accent-foreground: 150 30% 10%;
+    --accent: 142 70% 45%;
+    --accent-foreground: 160 35% 8%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 150 15% 20%;
-    --input: 150 15% 18%;
-    --ring: 142 50% 50%;
+    --border: 160 18% 18%;
+    --input: 160 18% 15%;
+    --ring: 142 70% 50%;
     
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -121,23 +122,57 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Playfair Display', serif;
   }
 }
 
 @layer components {
+  .card-glass {
+    background: var(--gradient-glass);
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow-card);
+    border: 1px solid hsl(40 30% 100% / 0.5);
+  }
+  
   .card-earth {
     background: var(--gradient-card);
     box-shadow: var(--shadow-card);
   }
   
-  .input-field {
-    @apply transition-all duration-300 focus:shadow-[0_0_0_3px_hsl(var(--accent)/0.2)];
+  .btn-golden {
+    background: var(--gradient-golden);
+    box-shadow: var(--shadow-golden);
+    @apply text-foreground font-semibold;
   }
   
-  .btn-earth {
-    background: var(--gradient-earth);
-    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98];
+  .btn-hero {
+    @apply relative overflow-hidden;
+    background: linear-gradient(135deg, hsl(38 92% 55%) 0%, hsl(35 85% 48%) 100%);
+    box-shadow: 0 8px 32px hsl(38 92% 55% / 0.4), inset 0 1px 0 hsl(40 100% 70% / 0.4);
+  }
+  
+  .btn-hero::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(135deg, hsl(35 90% 50%) 0%, hsl(30 80% 45%) 100%);
+  }
+  
+  .btn-hero:hover::before {
+    @apply opacity-100;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-hero);
+  }
+  
+  .hero-overlay {
+    background: linear-gradient(
+      180deg,
+      hsl(160 35% 8% / 0.4) 0%,
+      hsl(160 35% 8% / 0.6) 50%,
+      hsl(160 35% 8% / 0.85) 100%
+    );
   }
 }
 
@@ -146,28 +181,36 @@
     animation: fadeIn 0.6s ease-out forwards;
   }
   
-  .animate-slide-up {
-    animation: slideUp 0.5s ease-out forwards;
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
   }
   
-  .animate-pulse-soft {
-    animation: pulseSoft 2s ease-in-out infinite;
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+  }
+  
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+  
+  .animate-pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
   }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-@keyframes slideUp {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -175,11 +218,38 @@
   }
 }
 
-@keyframes pulseSoft {
-  0%, 100% {
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
     opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 8px 32px hsl(38 92% 55% / 0.4), inset 0 1px 0 hsl(40 100% 70% / 0.4);
   }
   50% {
-    opacity: 0.7;
+    box-shadow: 0 8px 50px hsl(38 92% 55% / 0.6), inset 0 1px 0 hsl(40 100% 70% / 0.5);
   }
 }

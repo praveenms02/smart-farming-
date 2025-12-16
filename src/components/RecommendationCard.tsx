@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Leaf, TrendingUp, AlertCircle, CheckCircle2, Sprout } from "lucide-react";
+import { Leaf, TrendingUp, AlertCircle, CheckCircle2, Sprout, Sparkles } from "lucide-react";
 
 interface Recommendation {
   crop: string;
@@ -18,55 +18,65 @@ interface RecommendationCardProps {
   recommendation: Recommendation;
 }
 
-const healthColors = {
-  excellent: "bg-leaf-green/20 text-leaf-green border-leaf-green/30",
-  good: "bg-accent/20 text-accent border-accent/30",
-  moderate: "bg-sun-gold/20 text-sun-gold border-sun-gold/30",
-  poor: "bg-destructive/20 text-destructive border-destructive/30",
-};
-
-const healthIcons = {
-  excellent: CheckCircle2,
-  good: CheckCircle2,
-  moderate: AlertCircle,
-  poor: AlertCircle,
+const healthConfig = {
+  excellent: { 
+    color: "bg-accent/15 text-accent border-accent/30",
+    icon: CheckCircle2,
+    gradient: "from-accent/20 to-accent/5"
+  },
+  good: { 
+    color: "bg-primary/15 text-primary border-primary/30",
+    icon: CheckCircle2,
+    gradient: "from-primary/20 to-primary/5"
+  },
+  moderate: { 
+    color: "bg-secondary/20 text-secondary-foreground border-secondary/40",
+    icon: AlertCircle,
+    gradient: "from-secondary/30 to-secondary/10"
+  },
+  poor: { 
+    color: "bg-destructive/15 text-destructive border-destructive/30",
+    icon: AlertCircle,
+    gradient: "from-destructive/20 to-destructive/5"
+  },
 };
 
 const RecommendationCard = ({ recommendation }: RecommendationCardProps) => {
-  const HealthIcon = healthIcons[recommendation.soilHealth];
+  const config = healthConfig[recommendation.soilHealth];
+  const HealthIcon = config.icon;
 
   return (
-    <Card className="card-earth border-0 overflow-hidden animate-slide-up">
-      <CardHeader className="pb-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-accent/15">
-              <Sprout className="w-6 h-6 text-accent" />
+    <Card className="card-glass border-0 overflow-hidden animate-slide-up">
+      <CardHeader className="pb-4 pt-8">
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-br from-accent to-primary shadow-glow">
+              <Sparkles className="w-7 h-7 text-primary-foreground" />
             </div>
             <div>
-              <CardTitle className="text-2xl font-serif">AI Recommendation</CardTitle>
-              <CardDescription className="text-sm">Based on your soil analysis</CardDescription>
+              <CardTitle className="text-3xl font-serif">AI Recommendation</CardTitle>
+              <CardDescription className="text-base mt-1">Based on your soil analysis</CardDescription>
             </div>
           </div>
-          <Badge variant="outline" className={`${healthColors[recommendation.soilHealth]} px-3 py-1 font-medium`}>
-            <HealthIcon className="w-3.5 h-3.5 mr-1.5" />
+          <Badge variant="outline" className={`${config.color} px-4 py-2 font-semibold text-sm rounded-xl`}>
+            <HealthIcon className="w-4 h-4 mr-2" />
             {recommendation.soilHealth.charAt(0).toUpperCase() + recommendation.soilHealth.slice(1)} Soil
           </Badge>
         </div>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 px-6 pb-8">
         {/* Recommended Crop */}
-        <div className="p-5 rounded-xl bg-primary/5 border border-primary/10">
+        <div className={`p-6 rounded-2xl bg-gradient-to-br ${config.gradient} border border-border/30`}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground mb-1">Recommended Crop</p>
-              <h3 className="text-3xl font-serif font-semibold text-primary">{recommendation.crop}</h3>
+              <p className="text-sm text-muted-foreground font-medium mb-2">Recommended Crop</p>
+              <h3 className="text-4xl font-serif font-bold text-foreground">{recommendation.crop}</h3>
             </div>
             <div className="text-right">
-              <p className="text-sm text-muted-foreground mb-1">Confidence</p>
+              <p className="text-sm text-muted-foreground font-medium mb-2">Confidence</p>
               <div className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-accent" />
-                <span className="text-2xl font-bold text-accent">{recommendation.confidence}%</span>
+                <TrendingUp className="w-6 h-6 text-accent" />
+                <span className="text-4xl font-bold text-accent">{recommendation.confidence}%</span>
               </div>
             </div>
           </div>
@@ -74,28 +84,44 @@ const RecommendationCard = ({ recommendation }: RecommendationCardProps) => {
 
         {/* Nutrient Status */}
         <div>
-          <h4 className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wide">Nutrient Status</h4>
-          <div className="grid grid-cols-3 gap-3">
-            {Object.entries(recommendation.nutrients).map(([key, value]) => (
-              <div key={key} className="p-3 rounded-lg bg-secondary/50 text-center">
-                <p className="text-xs text-muted-foreground capitalize mb-1">{key}</p>
-                <p className="text-sm font-semibold text-foreground">{value}</p>
-              </div>
-            ))}
+          <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wider flex items-center gap-2">
+            <Sprout className="w-4 h-4" />
+            Nutrient Status
+          </h4>
+          <div className="grid grid-cols-3 gap-4">
+            {Object.entries(recommendation.nutrients).map(([key, value], index) => {
+              const colors = ["bg-accent/10 border-accent/20", "bg-secondary/15 border-secondary/30", "bg-primary/10 border-primary/20"];
+              const textColors = ["text-accent", "text-secondary-foreground", "text-primary"];
+              return (
+                <div 
+                  key={key} 
+                  className={`p-4 rounded-xl ${colors[index]} border text-center animate-scale-in`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <p className="text-xs text-muted-foreground font-semibold capitalize mb-1 uppercase tracking-wide">{key}</p>
+                  <p className={`text-lg font-bold ${textColors[index]}`}>{value}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
 
         {/* Growing Tips */}
         <div>
-          <h4 className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wide">Growing Tips</h4>
-          <ul className="space-y-2.5">
+          <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wider flex items-center gap-2">
+            <Leaf className="w-4 h-4" />
+            Growing Tips
+          </h4>
+          <ul className="space-y-3">
             {recommendation.tips.map((tip, index) => (
               <li 
                 key={index} 
-                className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 animate-fade-in"
-                style={{ animationDelay: `${index * 0.15}s` }}
+                className="flex items-start gap-4 p-4 rounded-xl bg-muted/30 border border-border/30 animate-fade-in-up"
+                style={{ animationDelay: `${(index + 3) * 0.1}s` }}
               >
-                <Leaf className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                <div className="p-1.5 rounded-lg bg-accent/15 mt-0.5">
+                  <Leaf className="w-4 h-4 text-accent" />
+                </div>
                 <span className="text-sm text-foreground leading-relaxed">{tip}</span>
               </li>
             ))}
