@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Leaf, Droplets, FlaskConical, Sparkles, Loader2 } from "lucide-react";
+import { Leaf, Droplets, FlaskConical, Sparkles, Loader2, Atom, Beaker } from "lucide-react";
 
 interface SoilData {
   nitrogen: string;
@@ -40,43 +40,45 @@ const SoilNutrientForm = ({ onSubmit, isLoading }: SoilNutrientFormProps) => {
   };
 
   const inputFields = [
-    { name: "nitrogen", label: "Nitrogen (N)", placeholder: "e.g., 45 kg/ha", icon: Leaf, unit: "kg/ha" },
-    { name: "phosphorus", label: "Phosphorus (P)", placeholder: "e.g., 30 kg/ha", icon: FlaskConical, unit: "kg/ha" },
-    { name: "potassium", label: "Potassium (K)", placeholder: "e.g., 25 kg/ha", icon: Sparkles, unit: "kg/ha" },
-    { name: "ph", label: "pH Level", placeholder: "e.g., 6.5", icon: Droplets, unit: "pH" },
-    { name: "moisture", label: "Moisture", placeholder: "e.g., 35%", icon: Droplets, unit: "%" },
-    { name: "organicCarbon", label: "Organic Carbon", placeholder: "e.g., 1.2%", icon: Leaf, unit: "%" },
+    { name: "nitrogen", label: "Nitrogen (N)", placeholder: "45", icon: Atom, unit: "kg/ha", color: "text-accent" },
+    { name: "phosphorus", label: "Phosphorus (P)", placeholder: "30", icon: FlaskConical, unit: "kg/ha", color: "text-secondary" },
+    { name: "potassium", label: "Potassium (K)", placeholder: "25", icon: Beaker, unit: "kg/ha", color: "text-primary" },
+    { name: "ph", label: "pH Level", placeholder: "6.5", icon: Droplets, unit: "pH", color: "text-sky-blue" },
+    { name: "moisture", label: "Moisture", placeholder: "35", icon: Droplets, unit: "%", color: "text-sky-blue" },
+    { name: "organicCarbon", label: "Organic Carbon", placeholder: "1.2", icon: Leaf, unit: "%", color: "text-leaf-green" },
   ];
 
   return (
-    <Card className="card-earth border-0 overflow-hidden">
-      <CardHeader className="pb-6">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="p-2.5 rounded-xl bg-primary/10">
-            <FlaskConical className="w-6 h-6 text-primary" />
+    <Card className="card-glass border-0 overflow-hidden animate-scale-in">
+      <CardHeader className="pb-6 pt-8">
+        <div className="flex items-center gap-4 mb-3">
+          <div className="p-3 rounded-2xl bg-gradient-to-br from-primary to-accent shadow-glow">
+            <FlaskConical className="w-7 h-7 text-primary-foreground" />
           </div>
-          <CardTitle className="text-2xl font-serif">Soil Analysis</CardTitle>
+          <div>
+            <CardTitle className="text-3xl font-serif">Soil Analysis</CardTitle>
+            <CardDescription className="text-base text-muted-foreground mt-1">
+              Enter your soil nutrient values below
+            </CardDescription>
+          </div>
         </div>
-        <CardDescription className="text-base text-muted-foreground">
-          Enter your soil nutrient values to receive AI-powered crop recommendations
-        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-6 pb-8">
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {inputFields.map((field, index) => {
               const Icon = field.icon;
               return (
                 <div 
                   key={field.name} 
-                  className="space-y-2 animate-fade-in"
+                  className="space-y-2.5 animate-fade-in-up"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <Label htmlFor={field.name} className="text-sm font-medium flex items-center gap-2">
-                    <Icon className="w-4 h-4 text-accent" />
+                  <Label htmlFor={field.name} className="text-sm font-semibold flex items-center gap-2">
+                    <Icon className={`w-4 h-4 ${field.color}`} />
                     {field.label}
                   </Label>
-                  <div className="relative">
+                  <div className="relative group">
                     <Input
                       type="number"
                       step="0.01"
@@ -86,9 +88,9 @@ const SoilNutrientForm = ({ onSubmit, isLoading }: SoilNutrientFormProps) => {
                       value={formData[field.name as keyof SoilData]}
                       onChange={handleChange}
                       required
-                      className="pr-14"
+                      className="pr-16 h-14 text-base rounded-xl border-2 border-border/60 bg-background/80 focus:border-primary focus:bg-background transition-all duration-300"
                     />
-                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-muted-foreground font-medium">
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground font-medium px-2 py-1 rounded-md bg-muted/50">
                       {field.unit}
                     </span>
                   </div>
@@ -96,25 +98,28 @@ const SoilNutrientForm = ({ onSubmit, isLoading }: SoilNutrientFormProps) => {
               );
             })}
           </div>
-          <Button 
-            type="submit" 
-            variant="earth" 
-            size="lg" 
-            className="w-full mt-4"
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="w-5 h-5 animate-spin" />
-                Analyzing Soil Data...
-              </>
-            ) : (
-              <>
-                <Sparkles className="w-5 h-5" />
-                Get AI Recommendation
-              </>
-            )}
-          </Button>
+          
+          <div className="pt-4">
+            <Button 
+              type="submit" 
+              variant="earth" 
+              size="lg" 
+              className="w-full h-14 text-lg rounded-xl shadow-golden"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Analyzing Soil Data...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-5 h-5" />
+                  Get AI Recommendation
+                </>
+              )}
+            </Button>
+          </div>
         </form>
       </CardContent>
     </Card>

@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
 import SoilNutrientForm from "@/components/SoilNutrientForm";
 import RecommendationCard from "@/components/RecommendationCard";
-import HeroSection from "@/components/HeroSection";
-import { Leaf } from "lucide-react";
+import LandingHero from "@/components/LandingHero";
+import { Leaf, ArrowUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface SoilData {
   nitrogen: string;
@@ -27,9 +28,22 @@ interface Recommendation {
 }
 
 const Index = () => {
+  const [showForm, setShowForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
+  const formRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+
+  const handleGetStarted = () => {
+    setShowForm(true);
+    setTimeout(() => {
+      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+  };
+
+  const handleBackToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const handleFormSubmit = async (data: SoilData) => {
     setIsLoading(true);
@@ -83,46 +97,77 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-earth-cream/30">
-      {/* Background decoration */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 -left-40 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 -right-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-      </div>
+    <div className="min-h-screen bg-background">
+      {/* Landing Hero */}
+      <LandingHero onGetStarted={handleGetStarted} />
 
-      {/* Header */}
-      <header className="relative z-10 border-b border-border/50 backdrop-blur-sm bg-background/80">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-primary/10">
-              <Leaf className="w-5 h-5 text-primary" />
-            </div>
-            <span className="text-lg font-serif font-semibold text-foreground">AgroSense</span>
+      {/* Form Section */}
+      {showForm && (
+        <section 
+          ref={formRef} 
+          className="relative py-20 md:py-28 bg-gradient-to-b from-background via-earth-cream/30 to-background"
+        >
+          {/* Background decoration */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-20 -left-40 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+            <div className="absolute bottom-20 -right-40 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-3xl" />
           </div>
-        </div>
-      </header>
 
-      {/* Main content */}
-      <main className="relative z-10 container mx-auto px-4 py-12 md:py-16">
-        <HeroSection />
+          {/* Header */}
+          <div className="relative z-10 text-center mb-12 px-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+              <Leaf className="w-4 h-4" />
+              <span>Step 1 of 2</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-3">
+              Enter Soil Details
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+              Provide your soil nutrient measurements for an accurate AI analysis
+            </p>
+          </div>
 
-        <div className="max-w-2xl mx-auto space-y-8">
-          <SoilNutrientForm onSubmit={handleFormSubmit} isLoading={isLoading} />
-          
-          {recommendation && (
-            <RecommendationCard recommendation={recommendation} />
-          )}
-        </div>
-      </main>
+          {/* Form and Results */}
+          <div className="relative z-10 container mx-auto px-4">
+            <div className="max-w-2xl mx-auto space-y-10">
+              <SoilNutrientForm onSubmit={handleFormSubmit} isLoading={isLoading} />
+              
+              {recommendation && (
+                <RecommendationCard recommendation={recommendation} />
+              )}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-border/50 mt-20">
-        <div className="container mx-auto px-4 py-6">
-          <p className="text-center text-sm text-muted-foreground">
-            © 2024 AgroSense. Powered by AI for smarter farming.
-          </p>
-        </div>
-      </footer>
+      {showForm && (
+        <footer className="relative z-10 border-t border-border/50 bg-background">
+          <div className="container mx-auto px-4 py-8">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <Leaf className="w-5 h-5 text-primary" />
+                </div>
+                <span className="text-lg font-serif font-semibold text-foreground">AgroSense</span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                © 2024 AgroSense. Powered by AI for smarter farming.
+              </p>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleBackToTop}
+                className="gap-2"
+              >
+                <ArrowUp className="w-4 h-4" />
+                Back to Top
+              </Button>
+            </div>
+          </div>
+        </footer>
+      )}
     </div>
   );
 };
