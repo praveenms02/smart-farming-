@@ -1,9 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Leaf, TrendingUp, AlertCircle, CheckCircle2, Sprout, Sparkles } from "lucide-react";
+import { Leaf, TrendingUp, AlertCircle, CheckCircle2, Sprout, Sparkles, Users, FlaskConical } from "lucide-react";
 
 interface Recommendation {
   crop: string;
+  cropImage: string;
+  cropDescription: string;
   confidence: number;
   tips: string[];
   soilHealth: "excellent" | "good" | "moderate" | "poor";
@@ -12,6 +14,13 @@ interface Recommendation {
     phosphorus: string;
     potassium: string;
   };
+  companionCrop: {
+    name: string;
+    image: string;
+    description: string;
+  };
+  companionAdvantage: string;
+  organicFertilizers: string[];
 }
 
 interface RecommendationCardProps {
@@ -65,20 +74,93 @@ const RecommendationCard = ({ recommendation }: RecommendationCardProps) => {
         </div>
       </CardHeader>
       <CardContent className="space-y-6 px-6 pb-8">
-        {/* Recommended Crop */}
+        {/* Main Crop Section */}
         <div className={`p-6 rounded-2xl bg-gradient-to-br ${config.gradient} border border-border/30`}>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-muted-foreground font-medium mb-2">Recommended Crop</p>
-              <h3 className="text-4xl font-serif font-bold text-foreground">{recommendation.crop}</h3>
+          <div className="flex flex-col md:flex-row gap-6">
+            {/* Main Crop Image */}
+            <div className="flex-shrink-0">
+              <img 
+                src={recommendation.cropImage} 
+                alt={recommendation.crop}
+                className="w-full md:w-48 h-36 object-cover rounded-xl shadow-lg"
+                onError={(e) => {
+                  e.currentTarget.src = "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=300&fit=crop";
+                }}
+              />
             </div>
-            <div className="text-right">
-              <p className="text-sm text-muted-foreground font-medium mb-2">Confidence</p>
-              <div className="flex items-center gap-2">
-                <TrendingUp className="w-6 h-6 text-accent" />
-                <span className="text-4xl font-bold text-accent">{recommendation.confidence}%</span>
+            {/* Main Crop Info */}
+            <div className="flex-1">
+              <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
+                <h3 className="text-3xl font-serif font-bold text-foreground">{recommendation.crop}</h3>
+                <div className="flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5 text-accent" />
+                  <span className="text-2xl font-bold text-accent">{recommendation.confidence}%</span>
+                  <span className="text-sm text-muted-foreground">confidence</span>
+                </div>
+              </div>
+              <p className="text-muted-foreground leading-relaxed">{recommendation.cropDescription}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Companion Crop Section */}
+        <div>
+          <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wider flex items-center gap-2">
+            <Users className="w-4 h-4" />
+            Companion Crop
+          </h4>
+          <div className="p-5 rounded-xl bg-muted/30 border border-border/30">
+            <div className="flex flex-col sm:flex-row gap-4">
+              {/* Companion Crop Image */}
+              <div className="flex-shrink-0">
+                <img 
+                  src={recommendation.companionCrop.image} 
+                  alt={recommendation.companionCrop.name}
+                  className="w-full sm:w-32 h-24 object-cover rounded-lg shadow-md"
+                  onError={(e) => {
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=150&fit=crop";
+                  }}
+                />
+              </div>
+              {/* Companion Crop Info */}
+              <div className="flex-1">
+                <h5 className="text-xl font-serif font-semibold text-foreground mb-2">
+                  {recommendation.companionCrop.name}
+                </h5>
+                <p className="text-sm text-muted-foreground">{recommendation.companionCrop.description}</p>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Companion Advantage Section */}
+        <div>
+          <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wider flex items-center gap-2">
+            <Sprout className="w-4 h-4" />
+            Growing Together - Advantages
+          </h4>
+          <div className="p-5 rounded-xl bg-accent/10 border border-accent/20">
+            <p className="text-foreground leading-relaxed">{recommendation.companionAdvantage}</p>
+          </div>
+        </div>
+
+        {/* Organic Fertilizers Section */}
+        <div>
+          <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wider flex items-center gap-2">
+            <FlaskConical className="w-4 h-4" />
+            Recommended Organic Fertilizers
+          </h4>
+          <div className="flex flex-wrap gap-3">
+            {recommendation.organicFertilizers.map((fertilizer, index) => (
+              <Badge 
+                key={index} 
+                variant="secondary" 
+                className="px-4 py-2 text-sm font-medium rounded-xl bg-primary/10 text-primary border border-primary/20 animate-scale-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                {fertilizer}
+              </Badge>
+            ))}
           </div>
         </div>
 
