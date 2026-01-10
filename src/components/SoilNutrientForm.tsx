@@ -45,7 +45,7 @@ const SoilNutrientForm = ({ onSubmit, isLoading }: SoilNutrientFormProps) => {
     { name: "potassium", label: "Potassium (K)", placeholder: "25", icon: Beaker, unit: "kg/ha", color: "text-primary", type: "number" },
     { name: "ph", label: "pH Level", placeholder: "6.5", icon: Droplets, unit: "pH", color: "text-sky-blue", type: "number" },
     { name: "moisture", label: "Moisture", placeholder: "35", icon: Droplets, unit: "%", color: "text-sky-blue", type: "number" },
-    { name: "city", label: "City / Location", placeholder: "Enter your city", icon: MapPin, unit: "", color: "text-leaf-green", type: "text" },
+    { name: "city", label: "Temperature", placeholder: "25", icon: Droplets, unit: "", color: "text-leaf-green", type: "text" },
   ];
 
   return (
