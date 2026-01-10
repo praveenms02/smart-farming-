@@ -47,7 +47,7 @@ const Analyze = () => {
     setRecommendation(null);
 
     try {
-      const API_ENDPOINT = "/api/analyze-soil";
+      const API_ENDPOINT = "http://127.0.0.1:3001/predict";
       
       const response = await fetch(API_ENDPOINT, {
         method: "POST",
@@ -55,12 +55,13 @@ const Analyze = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          nitrogen: parseFloat(data.nitrogen),
-          phosphorus: parseFloat(data.phosphorus),
-          potassium: parseFloat(data.potassium),
+          N: parseFloat(data.nitrogen),
+          P: parseFloat(data.phosphorus),
+          K: parseFloat(data.potassium),
           ph: parseFloat(data.ph),
-          moisture: parseFloat(data.moisture),
-          city: data.city,
+          humidity: parseFloat(data.moisture),
+          temperature: parseFloat(data.city),
+          rainfall: 100, 
         }),
       });
 
@@ -77,7 +78,7 @@ const Analyze = () => {
       });
     } catch (error) {
       console.error("API Error:", error);
-      
+      console.log("Error details:", error);
       const mockRecommendation: Recommendation = generateMockRecommendation(data);
       setRecommendation(mockRecommendation);
       
